@@ -6,7 +6,7 @@ import pytesseract
 
 days = ["Sat","Sun","Mon","Tue","Wed","Thu"]
 times = ["8:00-9:30","9:40-11:10","11:20-12:50","13:00-14:30","14:40-16:10","16:20-17:50"]
-input_image = cv2.imread(Path("input/image0.png"))
+input_image = cv2.imread(Path("input/image1.png"))
 
 xs, ys = detect_grid(input_image)
 cells = [[col for col in range(len(xs)-1)] for row in range(len(ys)-1)]

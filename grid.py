@@ -2,7 +2,7 @@ import cv2
 from pathlib import Path
 import numpy as np
 
-IMG_PATH = "input/image0.png"
+IMG_PATH = "input/image1.png"
 OUTPUT_DIR = Path("preprocessed_image")
 img = cv2.imread(IMG_PATH)
 
@@ -27,6 +27,9 @@ def keep_long_lines(bw,horizontal=True, scale=20):
     return cv2.dilate(opened,kernel)
 
 def merge_close(indices, gap=4):
+    if len(indices) == 0:
+        return []
+    
     groups,current = [],[indices[0]]
 
     for i in indices[1:]:
@@ -38,7 +41,7 @@ def merge_close(indices, gap=4):
     groups.append(int(np.mean(current)))
     return groups 
 
-def detect_grid(img,min_fill=0.5):
+def detect_grid(img,min_fill=0.3):
     bw = binarize(img)
     h,w = bw.shape
 
@@ -50,9 +53,12 @@ def detect_grid(img,min_fill=0.5):
     h_fill = horiz.sum(axis=1) / (255 * w)
     v_fill = vert.sum(axis=0) / (255 * h)
 
+    print("v_fill max:", v_fill.max(), "mean:", v_fill.mean(), "min_fill:", min_fill)
+
     xs = merge_close(np.where(v_fill > min_fill)[0])
     ys = merge_close(np.where(h_fill > min_fill)[0])
 
+    print(len(xs),len(ys))
     return xs,ys
 
 def draw_grid(img,xs,ys,out_path="debug_grid.png"):
@@ -72,7 +78,6 @@ def show_img(img):
     cv2.destroyAllWindows()
 
 
-binarize(img)
 xs,ys = detect_grid(img)
 
 draw_grid(img,xs,ys)
