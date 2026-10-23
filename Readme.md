@@ -146,9 +146,9 @@ Because a printed border is several pixels thick, `merge_close()` combines nearb
 
 `draw_grid()` writes `debug_grid.png`, which should be checked whenever the input format changes.
 
-**![Original Figure](input/image1.png)**
-**![Detected Grid Lines](debug_grid.png)**
-**![Binarized Image](preprocessed_image/bin_img.png)**
+<img src="debug_grid.png" alt="Detected timetable grid" width="75%">
+<img src="input/image1.png" alt="Original Image" width="75%">
+<img src="preprocessed_image/bin_img.png" alt="Binarized Image" width="75%">
 
 ## Stage 2: Cell Cropping and OCR
 
