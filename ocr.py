@@ -13,7 +13,7 @@ data = ast.literal_eval(content.strip())
 
 records = []
 
-for r , row in enumerate(data):
+for r , row in enumerate(data[1:]):
     day = row[0]
 
     for c , cell in enumerate(row[1:],start=1):

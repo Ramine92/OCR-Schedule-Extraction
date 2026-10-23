@@ -6,14 +6,15 @@ IMG_PATH = "input/image1.png"
 OUTPUT_DIR = Path("preprocessed_image")
 img = cv2.imread(IMG_PATH)
 
-def binarize(img):
+def binarize(img,save=False):
     if img is None:
         raise ValueError(f"Could not read image: {IMG_PATH}")
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     _, bin_img = cv2.threshold(gray,0,255,cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    output_path = OUTPUT_DIR / "bin_img.png"
-    cv2.imwrite(str(output_path),bin_img)
+    if save:
+        OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+        output_path = OUTPUT_DIR / "bin_img.png"
+        cv2.imwrite(str(output_path),bin_img)
     return bin_img
 
 def keep_long_lines(bw,horizontal=True, scale=20):
@@ -42,7 +43,7 @@ def merge_close(indices, gap=4):
     return groups 
 
 def detect_grid(img,min_fill=0.3):
-    bw = binarize(img)
+    bw = binarize(img,save=True)
     h,w = bw.shape
 
     horiz = keep_long_lines(bw,horizontal=True)

@@ -20,7 +20,7 @@ def extract_cells(xs,ys):
         fill cells matrix 
         each cell with its x,y coordinates
     """
-    for j in range(len(ys)-1):
+    for j in range(1,len(ys)-1):
 
         for i in range(len(xs)-1):
 
